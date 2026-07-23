@@ -1,0 +1,27 @@
+# Python bytecode & cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Deployment metadata (auto-generated at runtime on agent deploy)
+deployment_metadata.json
+
+# Environment variables & secrets
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and scratch files
+*.log
+scratch/
