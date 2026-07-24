@@ -17,4 +17,4 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Start uvicorn server for Agent Runtime container health check & API requests
-CMD ["sh", "-c", "uvicorn app.agent_runtime_app:agent_runtime --host 0.0.0.0 --port ${PORT:-8080}"]
+CMD ["sh", "-c", "uvicorn app.agent_runtime_app:app --host 0.0.0.0 --port ${PORT:-8080}"]

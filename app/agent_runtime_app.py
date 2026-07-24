@@ -21,6 +21,7 @@ os.environ["GOOGLE_API_USE_CLIENT_CERTIFICATE"] = "false"
 import vertexai
 from dotenv import load_dotenv
 from vertexai.agent_engines.templates.adk import AdkApp
+from google.adk.cli.fast_api import get_fast_api_app
 
 from app.agent import app as adk_app
 
@@ -36,4 +37,11 @@ class AgentEngineApp(AdkApp):
 gemini_location = os.environ.get("GOOGLE_CLOUD_LOCATION")
 agent_runtime = AgentEngineApp(
     app=adk_app,
+)
+
+# Expose ASGI FastAPI application for container deployment (uvicorn server entrypoint)
+AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
+app = get_fast_api_app(
+    agents_dir=AGENT_DIR,
+    web=True,
 )
