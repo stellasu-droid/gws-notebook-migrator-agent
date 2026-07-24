@@ -16,4 +16,5 @@ RUN pip install --no-cache-dir .
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["python", "-m", "app.agent_runtime_app"]
+# Start uvicorn server for Agent Runtime container health check & API requests
+CMD ["sh", "-c", "uvicorn app.agent_runtime_app:agent_runtime --host 0.0.0.0 --port ${PORT:-8080}"]

@@ -1,0 +1,8 @@
+manifest_version: "1.0"
+name: notebook-migrator-agent
+display_name: notebook-migrator-agent
+description: Gemini Enterprise Agent for migrating NotebookLM Takeout archives into Gemini Enterprise Notebooks
+deployment_target: agent_runtime
+runtime_config:
+  app: app.agent_runtime_app:agent_runtime
+  session_type: none
