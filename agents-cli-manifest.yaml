@@ -2,6 +2,7 @@ manifest_version: "1.0"
 name: notebook-migrator-agent
 display_name: notebook-migrator-agent
 description: Gemini Enterprise Agent for migrating NotebookLM Takeout archives into Gemini Enterprise Notebooks
+acli_version: 1.2.1
 create_params:
   deployment_target: agent_runtime
   session_type: none

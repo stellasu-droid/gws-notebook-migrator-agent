@@ -75,9 +75,9 @@ fi
 echo "--> Syncing dependencies with uv..."
 uv sync
 
-# Step 2: Deploy to Vertex AI Agent Runtime (Reasoning Engine)
-echo "--> Deploying Agent to Vertex AI Agent Runtime..."
-uv run agents-cli deploy --project "${PROJECT_ID}" --region "${REGION}" --update-env-vars "GEMINI_MODEL=${MODEL}"
+# Step 2: Deploy to Vertex AI Agent Runtime (Reasoning Engine) using agents-cli v1.2+
+echo "--> Deploying Agent to Vertex AI Agent Runtime via agents-cli v1.2+..."
+uv run --with "google-agents-cli>=1.2.1" agents-cli deploy --project "${PROJECT_ID}" --region "${REGION}" --update-env-vars "GEMINI_MODEL=${MODEL}"
 
 echo "============================================================"
 echo " ✅ Deployment to Vertex AI Agent Runtime completed!"

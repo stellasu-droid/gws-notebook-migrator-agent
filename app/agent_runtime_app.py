@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import inspect
+import json
 import os
 import logging
+from fastapi import FastAPI, HTTPException, Request, encoders, responses
 
 os.environ["GOOGLE_API_USE_MTLS"] = "never"
 os.environ["GOOGLE_API_USE_CLIENT_CERTIFICATE"] = "false"
@@ -41,7 +44,53 @@ agent_runtime = AgentEngineApp(
 
 # Expose ASGI FastAPI application for container deployment (uvicorn server entrypoint)
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
-app = get_fast_api_app(
+app: FastAPI = get_fast_api_app(
     agents_dir=AGENT_DIR,
     web=True,
 )
+
+def _no_op_instrumentor_builder(project_id: str) -> None:
+    return None
+
+runtime_instance: AdkApp | None = None
+
+def get_runtime() -> AdkApp:
+    global runtime_instance
+    if runtime_instance is None:
+        runtime_instance = AgentEngineApp(
+            app=adk_app,
+            instrumentor_builder=_no_op_instrumentor_builder,
+        )
+        runtime_instance.set_up()
+    return runtime_instance
+
+@app.post("/api/stream_reasoning_engine")
+async def stream_query_endpoint(request: Request) -> responses.StreamingResponse:
+    body = await request.json()
+    rt = get_runtime()
+    class_method = body.get("class_method", "stream_query")
+    method = getattr(rt, class_method)
+
+    async def generator():
+        async for event in method(**(body.get("input") or {})):
+            yield json.dumps(event) + "\n"
+
+    return responses.StreamingResponse(
+        content=generator(), media_type="application/json"
+    )
+
+@app.post("/api/reasoning_engine")
+async def query_endpoint(request: Request) -> responses.JSONResponse:
+    body = await request.json()
+    rt = get_runtime()
+    class_method = body.get("class_method", "query")
+    method = getattr(rt, class_method)
+    kwargs = body.get("input") or {}
+    output = (
+        await method(**kwargs)
+        if inspect.iscoroutinefunction(method)
+        else method(**kwargs)
+    )
+    return responses.JSONResponse(
+        content=encoders.jsonable_encoder({"output": output})
+    )

@@ -84,12 +84,14 @@ Google Workspace NotebookLM users can export their notebooks via Google Takeout 
 notebook_migrator_agent/
 ├── app/
 │   ├── agent.py               # Main ADK Agent & summary report generator
-│   ├── agent_runtime_app.py   # Vertex AI Agent Runtime entrypoint
+│   ├── agent_runtime_app.py   # Vertex AI Agent Runtime entrypoint & RPC routes
 │   ├── unzipper.py            # Multi-part ZIP downloader & extractor
 │   ├── parser.py              # Takeout scanner & HTML text converter
 │   ├── migrator.py            # Discovery Engine REST API client
 │   ├── utils.py               # OAuth token & location helpers
 │   └── schemas.py             # Pydantic v2 data models
+├── agents-cli-manifest.yaml   # ADK 1.2+ deployment manifest
+├── Dockerfile                 # Container image specification & uvicorn entrypoint
 ├── deploy.sh                  # One-click deployment script
 ├── pyproject.toml             # Python package & deployment dependencies
 ├── .gitignore                 # Git ignore rules

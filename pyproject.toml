@@ -31,18 +31,3 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["app"]
-
-[tool.agents-cli]
-name = "notebook-migrator-agent"
-description = "Gemini Enterprise Agent for migrating NotebookLM Takeout archives into Gemini Enterprise Notebooks"
-base_template = "adk"
-agent_directory = "app"
-
-[tool.agents-cli.create_params]
-deployment_target = "agent_runtime"
-session_type = "none"
-cicd_runner = "skip"
-include_data_ingestion = false
-datastore = "none"
-
-
