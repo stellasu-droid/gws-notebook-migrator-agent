@@ -8,8 +8,9 @@ An **ADK (Google Agent Development Kit)** agent that enables users to migrate **
 
 ### Prerequisites (Local Machine)
 Ensure you have the following installed and configured before starting:
-- **Python 3.10+**
+- **Python 3.11+**
 - **Gcloud CLI**
+- **uv**
 
 Authenticate your local environment to your Google Cloud Project:
 ```

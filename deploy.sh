@@ -57,7 +57,7 @@ echo " Model:   ${MODEL}"
 echo "============================================================"
 
 # Set active GCP project and region
-gcloud config set project "${PROJECT_ID}"
+gcloud config set project "${PROJECT_ID}" 2>/dev/null || true
 export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
 export GOOGLE_CLOUD_REGION="${REGION}"
 export GEMINI_MODEL="${MODEL}"
