@@ -11,6 +11,7 @@ Ensure you have the following installed and configured before starting:
 - **Python 3.11+**
 - **Gcloud CLI**
 - **uv**
+- **google-agents-cli v1.2.1+**
 
 Authenticate your local environment to your Google Cloud Project:
 ```
